@@ -12,7 +12,7 @@ class OptSimple
         map {|o| o.split[0].gsub(/^(\-)+/, '').gsub('-', '_') }
 
       # regist parser
-      parser.on(*s){|v|
+      parser.on(*s) {|v|
         instance_variable_set('@' + main_option_name, v)
       }
 
