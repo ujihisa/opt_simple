@@ -21,11 +21,10 @@ class OptSimple
         :attr_reader, main_option_name.to_sym)
 
       # define getter alias
-      option_names.each{|s|
-        self.class.class_eval {
-          alias_method s, main_option_name
-        }
-      }
+      option_names.each do |s|
+        self.class.__send__(
+          :alias_method, s, main_option_name)
+      end
     end
     @remain = parser.parse(argv)
   end
