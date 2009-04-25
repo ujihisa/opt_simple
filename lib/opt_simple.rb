@@ -17,9 +17,8 @@ class OptSimple
       }
 
       # define getter
-      self.class.class_eval {
-        attr_reader main_option_name.to_sym
-      }
+      self.class.__send__(
+        :attr_reader, main_option_name.to_sym)
 
       # define getter alias
       option_names.each{|s|
