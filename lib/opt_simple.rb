@@ -6,7 +6,6 @@ class OptSimple
   def initialize(spec, argv)
     parser = OptionParser.new
     spec.each do |s|
-      main_option_name = option_names = nil
       s = [s] unless s.kind_of? Array
 
       main_option_name, *option_names = s[0..1].select {|o| /^-/ =~ o }.
@@ -19,9 +18,7 @@ class OptSimple
 
       # define getter
       self.class.class_eval {
-        define_method(main_option_name) {
-          instance_variable_get('@' + main_option_name)
-        }
+        attr_reader main_option_name.to_sym
       }
 
       # define getter alias
@@ -34,5 +31,3 @@ class OptSimple
     @remain = parser.parse(argv)
   end
 end
-
-
