@@ -5,14 +5,12 @@ class OptSimple
 
   def initialize(spec, argv)
     parser = OptionParser.new
-    spec.each{|s|
+    spec.each do |s|
       main_option_name = option_names = nil
-      if (!(s.kind_of? Array))
-        s = [s]
-      end
+      s = [s] unless s.kind_of? Array
 
-      option_names = s[0..1].select{|o| o =~ /^-/}.map{|o| o.split[0].gsub(/^(\-)+/, '').gsub(/-/, '_')}
-      main_option_name = option_names.shift
+      main_option_name, *option_names = s[0..1].select {|o| /^-/ =~ o }.
+        map {|o| o.split[0].gsub(/^(\-)+/, '').gsub('-', '_') }
 
       # regist parser
       parser.on(*s){|v|
@@ -32,7 +30,7 @@ class OptSimple
           alias_method s, main_option_name
         }
       }
-    }
+    end
     @remain = parser.parse(argv)
   end
 end
